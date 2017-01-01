@@ -1,0 +1,4 @@
+name: ExtremeSurvival
+main: com.minecraft.plugin.ExtremeSurvival
+version: 1.0
+commands:
