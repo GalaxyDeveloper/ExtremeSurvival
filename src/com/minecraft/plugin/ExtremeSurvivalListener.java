@@ -15,11 +15,10 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class ExtremeSurvivalListener implements Listener {
 
-	// Gravity 1
+	// Gravity
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e) {
 		Block block = e.getBlock();
@@ -34,15 +33,12 @@ public class ExtremeSurvivalListener implements Listener {
 			gravity(block, world);
 		}
 	}
-	
-	// Gravity 2
 	@EventHandler
 	public void onBlockFloating(BlockBreakEvent e) {
 		Block block = e.getBlock();
 		World world = e.getPlayer().getWorld();
 		Location location = block.getLocation();
 		Block aboveBlock = world.getBlockAt(new Location(world, location.getX(), location.getY() + 1, location.getZ()));
-		Bukkit.getServer().broadcastMessage("breaked block is: " + block.getType() + " above is: " + aboveBlock.getType());
 		if (aboveBlock.getType() == Material.COBBLESTONE ||
 			aboveBlock.getType() == Material.DIRT ||
 			aboveBlock.getType() == Material.GRASS) {
@@ -61,7 +57,6 @@ public class ExtremeSurvivalListener implements Listener {
 
 	private void gravity(Block block, World world) {
 		if (isUnderBlockAIR(block, world)) {
-			Bukkit.getServer().broadcastMessage("under is AIR");
 			Location location = block.getLocation();
 			Location newLocation = new Location(world, location.getX() +0.5, location.getY(), location.getZ() +0.5);
 			FallingBlock fb = block.getWorld().spawnFallingBlock(newLocation, block.getType(), block.getData());			
@@ -79,7 +74,7 @@ public class ExtremeSurvivalListener implements Listener {
 		return bUnder.getType() == Material.AIR;
 	}
 
-	// Stone To Cobblestone
+	// Improved Mining Experience
 	@EventHandler
 	public void onBlockDamage(BlockDamageEvent e) {
 		Player player = e.getPlayer();
@@ -94,5 +89,17 @@ public class ExtremeSurvivalListener implements Listener {
 				gravity(block, world);
 			}
 		}
+	}
+	// Weight(WIP Event)
+	//@EventHandler
+	//public void onPlayerHoldsHeavyItem(PlayerItemHeldEvent e) {
+		//Player player = e.getPlayer();
+		//if (player.getInventory().getItem(e.getNewSlot()) != null && player.getInventory().getItem(e.getNewSlot()).getType().toString().toLowerCase().contains("anvil")) {
+			 //player.addPotionEffect((new PotionEffect(PotionEffectType.SLOW, 100000, 5)));
+			 //Bukkit.getServer().broadcastMessage("Overburdened");
+		//} else {
+			//player.removePotionEffect(PotionEffectType.SLOW);
+			//Bukkit.getServer().broadcastMessage("Not Overburdened");
+		{
 	}
 }
